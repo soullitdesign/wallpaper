@@ -1,4 +1,4 @@
-name: Deploy Nocturne to GitHub Pages
+name: Deploy Soullit Design to GitHub Pages
 
 on:
   push:
