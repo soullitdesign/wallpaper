@@ -86,7 +86,7 @@ export default function Home() {
       <header className="topbar">
         <a className="wordmark" href="#top"><strong>SOULLIT<span> DESIGN</span></strong><small>WALLPAPERS & DIGITAL ART</small></a>
         <label className="searchbox"><Icon name="search"/><input value={query} onChange={e=>{setQuery(e.target.value);setVisible(6);}} placeholder="Search wallpapers, moods, colours..." aria-label="Search wallpapers"/>{query&&<button onClick={()=>setQuery("")} aria-label="Clear search"><Icon name="close"/></button>}<kbd>⌘ K</kbd></label>
-        <div className="top-actions"><a href="#about">About</a><a className="submit-link" href="#collections">Explore collection <Icon name="arrow"/></a></div>
+        <div className="top-actions"><a href="#about">About</a><a className="submit-link" href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">Request a wallpaper <Icon name="arrow"/></a></div>
       </header>
 
       <div className="mobile-brand"><strong>SOULLIT DESIGN</strong><button onClick={()=>setMobileMenu(!mobileMenu)}><Icon name="menu"/></button></div>
@@ -119,7 +119,7 @@ export default function Home() {
         </aside>
       </div>
 
-      <footer className="site-footer" id="about"><div><strong>SOULLIT DESIGN</strong><span>Original wallpapers & digital art, made with feeling.</span></div><nav><a href="#top">Back to top ↑</a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a></nav><small>© 2026 SOULLIT DESIGN · MADE FOR YOUR EVERYDAY</small></footer>
+      <footer className="site-footer" id="about"><div><strong>SOULLIT DESIGN</strong><span>Original wallpapers & digital art, made with feeling.</span></div><nav><a className="footer-request" href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">Request a wallpaper ↗</a><a href="#top">Back to top ↑</a></nav><small>© 2026 SOULLIT DESIGN · MADE FOR YOUR EVERYDAY</small></footer>
     </div>
 
     {preview&&<div className="preview-modal" role="dialog" aria-modal="true" aria-label={preview.title} onClick={()=>setPreview(null)}><button className="modal-close" onClick={()=>setPreview(null)} aria-label="Close preview"><Icon name="close"/></button><div className="preview-card" onClick={e=>e.stopPropagation()}><img src={image(preview.id,true)} alt={preview.title}/><div><small>{preview.category.toUpperCase()} · SOULLIT DESIGN</small><h2>{preview.title}</h2><p>{preview.description}</p><button className="download-button" onClick={()=>download(preview)}><Icon name="download"/> Download wallpaper</button></div></div></div>}
