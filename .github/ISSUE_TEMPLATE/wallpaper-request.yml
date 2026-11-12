@@ -1,0 +1,43 @@
+name: Wallpaper request
+description: Suggest an idea for a future Soullit Design wallpaper.
+title: "[Wallpaper request]: "
+labels: ["wallpaper request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share the mood, subject, colours or style you'd love to see. Please don't include private information.
+  - type: input
+    id: subject
+    attributes:
+      label: Wallpaper idea
+      description: Give your idea a short title.
+      placeholder: e.g. A quiet moonlit city
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your idea
+      description: Tell us what the wallpaper should look and feel like.
+      placeholder: Mood, scene, colours, art style...
+    validations:
+      required: true
+  - type: dropdown
+    id: format
+    attributes:
+      label: Preferred format
+      options:
+        - Desktop
+        - Laptop
+        - Mobile
+        - All formats
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference link (optional)
+      description: Link to inspiration, if you have one.
+    validations:
+      required: false
