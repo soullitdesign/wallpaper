@@ -1,4 +1,4 @@
-# Nocturne Studio
+# Soullit Design
 
 A fresh, responsive landing page for an illustrated digital wallpaper collection.
 
