@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.venv/
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+.env*.local
+
+# Full-resolution working files (regenerate with scripts/process-images.py)
+assets/img/
