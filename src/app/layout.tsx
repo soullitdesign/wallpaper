@@ -2,54 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/inter";
 import "./globals.css";
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://nocturne.studio"),
-  title: "Nocturne — Wallpapers painted for after dark",
-  description:
-    "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download, one payment, yours forever.",
-  keywords: [
-    "digital wallpapers",
-    "phone wallpaper",
-    "desktop wallpaper",
-    "illustrated wallpaper",
-    "4K wallpapers",
-    "art wallpaper pack",
-  ],
-  authors: [{ name: "Nocturne Studio" }],
-  openGraph: {
-    title: "Nocturne — Wallpapers painted for after dark",
-    description:
-      "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download.",
-    type: "website",
-    siteName: "Nocturne Studio",
-    images: [{ url: "/img/wallpapers/the-last-waltz-card.webp", width: 900, height: 1200 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Nocturne — Wallpapers painted for after dark",
-    description:
-      "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download.",
-  },
-};
-
-export const viewport: Viewport = {
-  themeColor: "#08080b",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en">
-      <body className="grain">
-        <script
-          // Marks the document as JS-capable before paint, so scroll reveals can
-          // start hidden without leaving a blank page when JS is unavailable.
-          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
-        />
-        {children}
-      </body>
-    </html>
-  );
-}
+const siteUrl="https://soullitdesign.github.io/wallpaper";
+export const metadata:Metadata={metadataBase:new URL(siteUrl),title:"Nocturne Studio — Wallpapers for the in-between",description:"Illustrated worlds for the spaces you look at most. Explore eight original atmospheric digital wallpapers by Nocturne Studio.",alternates:{canonical:"/"},openGraph:{title:"Nocturne Studio — Wallpapers for the in-between",description:"Eight original illustrated wallpapers, thoughtfully made for your everyday.",url:siteUrl,siteName:"Nocturne Studio",type:"website",images:["/wallpaper/img/wallpapers/the-last-waltz-card.webp"]},twitter:{card:"summary_large_image",title:"Nocturne Studio — Wallpapers for the in-between",description:"Eight original illustrated wallpapers, thoughtfully made for your everyday.",images:["/wallpaper/img/wallpapers/the-last-waltz-card.webp"]},robots:{index:true,follow:true}};
+export const viewport:Viewport={themeColor:"#eae8e1",width:"device-width",initialScale:1};
+export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body>{children}</body></html>}
