@@ -1,12 +1,12 @@
 {
   "name": "nocturne-studio",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
-    "lint": "next lint"
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -23,5 +23,5 @@
     "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2"
   },
-  "description": "Nocturne Studio — a landing page for selling illustrated digital wallpapers."
+  "description": "Nocturne Studio — an illustrated digital wallpaper collection."
 }
