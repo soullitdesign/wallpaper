@@ -1,5 +1,5 @@
 {
-  "name": "nocturne-studio",
+  "name": "soullit-design-wallpaper",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -23,5 +23,5 @@
     "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2"
   },
-  "description": "Nocturne Studio — an illustrated digital wallpaper collection."
+  "description": "Soullit Design — original illustrated wallpapers and digital artwork."
 }
