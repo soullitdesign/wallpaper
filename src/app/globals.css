@@ -6,3 +6,61 @@
 @media(max-width:760px){:root{--rail:0px}.rail{display:none}.workspace{margin:0;padding:0 18px}.topbar{height:58px;gap:12px}.wordmark{min-width:auto}.wordmark strong{font-size:11px}.wordmark small{font-size:7px}.top-actions>a:first-child{display:none}.top-actions .submit-link{font-size:0;padding:9px}.submit-link svg{width:17px}.searchbox{max-width:none;height:35px}.searchbox kbd{display:none}.browse-head{height:auto;min-height:55px;align-items:flex-start;flex-direction:column;gap:10px;padding:10px 0}.tabs{height:34px;gap:17px}.browse-tools{width:100%;height:auto;justify-content:flex-start}.browse-tools label{flex:1;justify-content:space-between}.browse-tools select{max-width:100px}.title-row{padding:25px 0 17px}.title-row h1{font-size:23px}.title-row h1 em{font-size:23px}.title-note{display:none}.chips{padding-bottom:15px}.content-layout{display:flex;flex-direction:column}.gallery{width:100%}.masonry{columns:2;column-gap:10px}.tile{margin-bottom:11px}.tile-meta{padding:8px}.tile-meta strong{font-size:10px}.tile-meta small{font-size:8px}.save{width:26px;height:26px}.detail-panel{position:static;width:100%;display:grid;grid-template-columns:1fr 1fr}.detail-preview{height:180px;grid-row:span 2}.detail-info{padding:14px}.related{grid-column:1/-1}.related-grid{grid-template-columns:repeat(4,1fr)}.related-grid button{height:95px}.panel-note{grid-column:1/-1}.site-footer{margin-top:25px}.preview-card{grid-template-columns:1fr;gap:12px;max-width:460px;overflow:auto}.preview-card>img{max-height:62vh;margin:auto}.preview-card h2{font-size:25px;margin:5px 0}.preview-card p{margin:0 0 12px}.preview-card>div{padding-bottom:5px}}
 @media(max-width:430px){.workspace{padding:0 12px}.topbar{gap:8px}.wordmark strong{font-size:9px}.wordmark small{font-size:6px}.searchbox{padding:0 10px;gap:7px}.searchbox input{font-size:10px}.top-actions{display:none}.browse-tools label{font-size:9px}.browse-tools select{font-size:9px;max-width:82px}.masonry{column-gap:8px}.tile-meta strong{font-size:9px}.tile-meta small{font-size:7px}.detail-panel{display:block}.detail-preview{height:210px}.related-grid button{height:78px}.site-footer>div{display:block}.site-footer span{display:block;margin-top:5px}.site-footer nav{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+
+
+/* Soullit Design — midnight and gold theme */
+:root{color-scheme:dark;--ink:#FFE6A8;--muted:#b5c1d2;--line:#263d5d;--paper:#07142E;--soft:#102A50;--accent:#F5C16C}
+html,body{background:#07142E;color:#FFE6A8}
+.rail,.topbar,.browse-head,.detail-panel,.tile,.site-footer,.searchbox,.browse-tools label,.chips button,.load-more,.empty button,.save,.save-line{background-color:#102A50;color:#FFE6A8;border-color:#294365}
+.rail{border-right-color:#294365}
+.rail-logo span{background:#F5C16C;color:#07142E}
+.rail>button,.rail>a:not(.rail-logo){color:#c2cee0}
+.rail>button:hover,.rail>a:hover,.rail .rail-active{background:#1a3b66;color:#FFE6A8}
+.wordmark strong,.site-footer strong,.tile-meta strong,.related-head strong{color:#FFE6A8}
+.wordmark small,.eyebrow,.result-count,.title-note,.tile-meta small,.detail-kicker,.detail-info>p,.site-footer span,.site-footer nav,.site-footer>small,.end-note{color:#aab9ce}
+.searchbox{background:#102A50;color:#FFE6A8}
+.searchbox input{color:#FFE6A8}
+.searchbox input::placeholder{color:#9aabc2}
+.searchbox kbd{color:#c0cce0;border-color:#405777}
+.top-actions{color:#c2cee0}
+.submit-link,.footer-request{background:#F5C16C!important;color:#07142E!important;border-color:#F5C16C!important;font-weight:700}
+.submit-link:hover,.footer-request:hover{background:#FFE6A8!important}
+.tabs button{color:#aab9ce}
+.tabs button.selected{color:#FFE6A8;border-color:#F5C16C}
+.tabs sup{color:#91a2bb}
+.browse-tools label{background:#102A50;color:#c2cee0}
+.browse-tools select{background:#102A50;color:#FFE6A8}
+.title-row h1,.title-row h1 em{color:#FFE6A8}
+.chips button{background:#102A50;color:#c2cee0;border-color:#294365}
+.chips button:hover,.chips button.chip-active{background:#F5C16C;color:#07142E;border-color:#F5C16C}
+.chips .chip-next{color:#FFE6A8}
+.tile{background:#102A50;border-color:#294365}
+.tile-image,.detail-preview,.related-grid button{background:#0b1d3a}
+.tile-overlay,.detail-preview button{background:#FFE6A8;color:#07142E}
+.tile-meta strong{color:#FFE6A8}
+.save{background:#102A50;color:#FFE6A8;border-color:#405777}
+.save.saved{background:#F5C16C;color:#07142E;border-color:#F5C16C}
+.load-more{background:#102A50;color:#FFE6A8;border-color:#405777}
+.load-more:hover{background:#1a3b66}
+.detail-panel{background:#102A50;border-color:#294365}
+.detail-kicker span,.panel-note>span,.empty>span{color:#F5C16C}
+.detail-info h2,.panel-note p{color:#FFE6A8}
+.detail-tags span{background:#1b3a61;color:#d8e1ed}
+.download-button{background:#F5C16C;color:#07142E;font-weight:700}
+.download-button:hover{background:#FFE6A8}
+.save-line{background:transparent;color:#c2cee0}
+.related{border-color:#294365}
+.related-head button{color:#b5c1d2}
+.panel-note{border-color:#294365}
+.panel-note small{color:#aab9ce}
+.empty{border-color:#405777}
+.empty h2{color:#FFE6A8}
+.empty p{color:#aab9ce}
+.empty button{background:#102A50;color:#FFE6A8;border-color:#405777}
+.site-footer{border-color:#294365}
+.site-footer a:hover{color:#F5C16C}
+.preview-modal{background:#030b1bF2}
+.preview-card{color:#FFE6A8}
+.preview-card>div>small,.preview-card p{color:#b5c1d2}
+.mobile-brand{color:#FFE6A8}
+@media(max-width:760px){.browse-head{background:#07142E}.detail-panel{background:#102A50}}
