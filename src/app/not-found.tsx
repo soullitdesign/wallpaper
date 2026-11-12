@@ -1,21 +1,28 @@
 import Link from "next/link";
-import { Crescent } from "@/lib/stickers";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center px-6 text-center">
-      <Crescent className="h-12 w-12 text-amber-glow/70" />
-      <p className="eyebrow mt-6">404 · after hours</p>
-      <h1 className="mt-4 font-display text-[clamp(2.2rem,6vw,3.4rem)] leading-[1.02]">
-        This room is <em className="italic text-amber-soft">empty.</em>
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[30rem] w-[40rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(233,168,76,0.16),transparent)] blur-[80px]"
+      />
+      <p className="label text-amber">404 — after hours</p>
+      <h1 className="mt-6 font-display text-[clamp(3rem,9vw,6rem)] leading-[0.9] tracking-[-0.03em]">
+        This page went
+        <br />
+        <em className="italic text-amber">home early</em>.
       </h1>
-      <p className="mt-4 text-[0.94rem] leading-relaxed text-cream-dim">
-        The piece you were looking for has moved, or maybe never existed. The collection is still
-        awake though.
+      <p className="mt-6 max-w-sm text-sm leading-relaxed text-sand/60">
+        The art is still hanging in the gallery. Let&apos;s get you back to the
+        quiet hours.
       </p>
-      <Link href="/#collection" className="btn btn-primary mt-8">
-        Back to the collection
+      <Link
+        href="/"
+        className="mt-9 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink transition hover:bg-amber"
+      >
+        Back to Nocturne
       </Link>
-    </div>
+    </main>
   );
 }

@@ -1,57 +1,97 @@
-# Nocturne Studio
+# Nocturne Studio — wallpaper landing page
 
-A storefront for selling hand-painted wallpapers. Built with Next.js 16, Tailwind CSS v4 and zero runtime dependencies beyond React.
+A single-page storefront for selling illustrated digital wallpapers. Built with
+Next.js 16, React 19 and Tailwind CSS v4, with zero runtime dependencies beyond
+React.
 
-The palette is sampled directly from the artwork — midnight navy, candle crimson and lamplight amber:
-
-| Token | Hex | Sampled from |
-| --- | --- | --- |
-| Ink / midnight | `#070B1C` → `#1C274B` | night sky + party shadows |
-| Crimson | `#882A27` → `#B0433C` | the red dress |
-| Lamplight amber | `#D99C75` / `#F0C86A` | string lights, sunflowers |
-| Cream | `#F6EFE4` | paper / type |
+The design is editorial and night-lit: deep ink, warm lamplight amber, a serif
+display face (Fraunces) against Inter, film grain over the whole page, and a
+live device preview that swaps artwork as you browse.
 
 ## Run it
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev     # http://localhost:3000
 npm run build && npm start
 ```
 
-## What is included
+## What's on the page
 
-- **Homepage** — hero, scrolling ticker, filterable collection, how-it-works, bundle block, dual licence comparison, testimonials, studio story + FAQ, newsletter.
-- **Product pages** — `/wallpaper/[slug]`, eight pieces statically generated, licence selector with live pricing, palette read-out, phone mock, related pieces.
-- **Cart drawer** — persists to `localStorage`, promo code `NOCTURNE15` (15% off), automatic **Triptych bundle** (any three personal pieces for $12), demo checkout with an order confirmation state.
-- **Wishlist** — `/wishlist`, stars on every card, stored per device.
-- **SEO** — metadata, Open Graph cards, `sitemap.xml`, responsive, keyboard accessible, respects `prefers-reduced-motion`.
+| Section | What it does |
+| --- | --- |
+| Nav | Sticky, blur-on-scroll, mobile sheet, live pack counter |
+| Hero | Rotating artwork on a phone + desktop mock, thumbnail selector, ambient glow sampled from the active piece, trust row |
+| Marquee | Scrolling spec ticker |
+| The collection | Filterable 8-piece grid (All / City Lights / Romance / Solitude) with hover details and palette dots |
+| Lightbox | Full preview, story, palette swatches, keyboard ← → / Esc, add single piece or the whole collection |
+| Every screen | Desktop + tablet + phone composition and spec list |
+| From the studio | Editorial story block with plate caption and studio stats |
+| How it works | Three steps from browsing to lock screen |
+| Pricing | One piece ($4), The Collection ($19), Studio licence ($59) |
+| Testimonials | Rating summary and three quotes |
+| FAQ | Accessible accordion with contact link |
+| Closing | Full-bleed CTA with working newsletter validation |
+| Pack drawer | Slide-over bag, remove items, subtotal, demo checkout confirmation |
+| 404 | On-brand not-found page |
+
+Also included: Open Graph/Twitter metadata, `sitemap.xml`, `robots.txt`,
+favicon, skip link, `prefers-reduced-motion` support and keyboard-accessible
+controls.
+
+## Where things live
+
+```
+src/
+  app/
+    layout.tsx      fonts + metadata
+    page.tsx        the landing page composition
+    globals.css     design tokens, grain, keyframes, utilities
+    icon.svg        favicon
+  components/       one file per section, plus DeviceMocks and PackDrawer
+  lib/
+    wallpapers.ts   the catalogue — titles, prices, stories, palettes
+    pack.tsx        pack context (client state for the drawer)
+public/img/wallpapers/
+  <slug>-full.webp  1600px — lightbox & device previews
+  <slug>-card.webp   900px — collection grid
+  <slug>-thumb.webp  320px — thumbnail strip / drawer
+assets/wallpapers/   original source art
+```
 
 ## Swapping in your own art
 
-1. Drop your originals anywhere (e.g. `assets/wallpapers/`).
-2. Re-run the image script — it writes three web sizes per piece (full 1600px, card 900px, thumb 320px) as WebP:
+1. Drop originals into `assets/wallpapers/` (or anywhere).
+2. Export three WebP sizes per piece into `public/img/wallpapers/`, using the
+   same slug and the `-full`, `-card`, `-thumb` suffixes.
+3. Edit `src/lib/wallpapers.ts` — title, collection, price, blurb, story and
+   palette. Every section, the drawer and the lightbox read from this one file.
 
-   ```bash
-   python3 -m venv .venv && .venv/bin/pip install pillow
-   .venv/bin/python scripts/process-images.py
-   ```
+A typical export with Pillow:
 
-   Edit the `SRC` dictionary at the top of `scripts/process-images.py` to point at your files and choose slugs.
-3. Update the catalogue in `src/lib/wallpapers.ts` — title, subtitle, collection, tags, price (in cents), story and palette.
-4. The homepage, product pages, cart and sitemap all read from that one file, so new pieces appear everywhere automatically.
+```python
+from PIL import Image
+for slug, src in pieces.items():
+    img = Image.open(src).convert("RGB")
+    for suffix, width in [("full", 1600), ("card", 900), ("thumb", 320)]:
+        copy = img.copy()
+        copy.thumbnail((width, width * 3), Image.LANCZOS)
+        copy.save(f"public/img/wallpapers/{slug}-{suffix}.webp", "WEBP", quality=82)
+```
 
 ## Taking real payments
 
-Checkout is currently a **demo** (`src/components/CartDrawer.tsx` → `checkout()`). The cart already computes the correct payable amount, bundle discount and promo discount. To go live, replace that function with one of:
+Checkout is a demo: `src/components/PackDrawer.tsx` → the checkout button flips a
+local `placed` state. The drawer already computes the correct subtotal, so going
+live means replacing that handler with a real one:
 
-- **Stripe Checkout** — create a server route `src/app/api/checkout/route.ts` that builds line items and returns `session.url`.
-- **Lemon Squeezy / Gumroad** — simplest for digital files; they also act as merchant of record and handle VAT/UPI.
-- **Razorpay** — best if most of your buyers are in India.
+- **Stripe Checkout** — add `src/app/api/checkout/route.ts`, create line items,
+  return `session.url`.
+- **Lemon Squeezy / Gumroad** — simplest for digital files, and they handle
+  VAT/UPI as merchant of record.
+- **Razorpay** — handy if most buyers are in India.
 
-After payment, deliver the file pack from a signed URL or an email automation rather than a public path in `/public`.
-
-## Notes
-
-- The eight pieces in the catalogue are demo content: your two originals plus six painted companions in the same palette. Replace them with your own work before launch.
-- `NOCTURNE15` is a hard-coded promo for demonstration — move it to an env var or a database before selling.
+After payment, deliver files from signed URLs (or an email automation) rather
+than from a public `/public` path. Move the `hello@nocturne.studio` address,
+domain in `layout.tsx`, and the 30-day guarantee copy to your own details before
+launching.
