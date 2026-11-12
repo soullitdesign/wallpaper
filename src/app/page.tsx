@@ -1,40 +1,28 @@
-import Closing from "@/components/Closing";
-import Collection from "@/components/Collection";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import HowItWorks from "@/components/HowItWorks";
-import Marquee from "@/components/Marquee";
-import Nav from "@/components/Nav";
-import Pricing from "@/components/Pricing";
-import Showcase from "@/components/Showcase";
-import Story from "@/components/Story";
-import Testimonials from "@/components/Testimonials";
-import { PackProvider } from "@/lib/pack";
-
-export default function Home() {
-  return (
-    <PackProvider>
-      <a
-        href="#works"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[95] focus:rounded-full focus:bg-cream focus:px-4 focus:py-2 focus:text-sm focus:text-ink"
-      >
-        Skip to the collection
-      </a>
-      <Nav />
-      <main>
-        <Hero />
-        <Marquee />
-        <Collection />
-        <Showcase />
-        <Story />
-        <HowItWorks />
-        <Pricing />
-        <Testimonials />
-        <FAQ />
-        <Closing />
-      </main>
-      <Footer />
-    </PackProvider>
-  );
+"use client";
+import {useMemo,useState} from "react";
+const works=[
+["the-last-waltz","The Last Waltz","Romance","A dance beneath a thousand quiet stars"],
+["blue-hour","Blue Hour","Stillness","Where the city learns to breathe"],
+["neon-promenade","Neon Promenade","After dark","A little electric, a little nostalgic"],
+["paper-moon","Paper Moon","Dreamscape","A softer place to disappear"],
+["rooftop-reverie","Rooftop Reverie","Stillness","Somewhere between here and the skyline"],
+["sunflowers-at-midnight","Sunflowers at Midnight","Dreamscape","For the ones who bloom after dark"],
+["the-last-train","The Last Train","After dark","The beautiful things between destinations"],
+["candlelight-waltz","Candlelight Waltz","Romance","A room full of almost-forgotten warmth"]];
+const moods=["All","Romance","Stillness","After dark","Dreamscape"];
+const src=(id:string,full=false)=>`/wallpaper/img/wallpapers/${id}-${full?"full":"card"}.webp`;
+export default function Home(){
+ const [mood,setMood]=useState("All"),[preview,setPreview]=useState<string[]|null>(null),[menu,setMenu]=useState(false);
+ const shown=useMemo(()=>mood==="All"?works:works.filter(w=>w[2]===mood),[mood]);
+ function download(w:string[]){const a=document.createElement("a");a.href=src(w[0],true);a.download=`nocturne-${w[0]}.webp`;document.body.appendChild(a);a.click();a.remove();}
+ return <main>
+ <header className="header"><a className="brand" href="#home"><b>n.</b><span>NOCTURNE<small>WALLPAPERS FOR THE IN-BETWEEN</small></span></a><button className="hamb" onClick={()=>setMenu(!menu)} aria-label="Toggle menu">☰</button><nav className={menu?"nav show":"nav"}><a href="#collection" onClick={()=>setMenu(false)}>Collection</a><a href="#studio" onClick={()=>setMenu(false)}>Our world</a><a href="#details" onClick={()=>setMenu(false)}>The details</a><a className="navbutton" href="#collection">Explore wallpapers ↗</a></nav></header>
+ <section className="hero" id="home"><div className="hero-copy"><div className="eyebrow"><i/> DIGITAL ART / VOL. 001 — MADE FOR YOUR EVERYDAY</div><h1>A little more<br/><em>feeling.</em> A little<br/>less ordinary.</h1><p>Illustrated worlds for the spaces you look at most. Thoughtfully made wallpapers, for wherever your mind wanders.</p><div className="hero-actions"><a className="button" href="#collection">Find your feeling ↘</a><small>08 ORIGINAL ARTWORKS<br/>MADE TO LIVE WITH YOU</small></div></div><div className="hero-art"><img src={src("the-last-waltz",true)} alt="The Last Waltz illustrated night scene" fetchPriority="high"/><span className="sticker">NO.<strong>001</strong>THE NIGHT<br/>COLLECTION</span><div className="hero-caption">01 / 08 <span>THE LAST WALTZ</span> AFTER HOURS</div></div><div className="scrollhint">SCROLL TO WANDER <i/> DESIGNED TO FEEL LIKE SOMETHING</div></section>
+ <section className="intro" id="studio"><small>[ A NOTE FROM THE STUDIO ]</small><h2>Not just a background.<br/>A <em>place</em> to come back to.</h2><p>Little windows into other worlds. Made for the quiet moments, the long nights and everything between.</p></section>
+ <section className="collection" id="collection"><div className="sectiontop"><div><small>[ THE FIRST EDITION ]</small><h2>Find your <em>somewhere.</em></h2></div><p>Eight original scenes.<br/>One new point of view.</p></div><div className="filters">{moods.map(m=><button className={mood===m?"active":""} onClick={()=>setMood(m)} key={m}>{m}<sup>{m==="All"?"08":String(works.filter(w=>w[2]===m).length).padStart(2,"0")}</sup></button>)}</div><div className="grid">{shown.map(w=><article className="work" key={w[0]}><button className="art" onClick={()=>setPreview(w)} aria-label={`Preview ${w[1]}`}><img src={src(w[0])} alt={w[1]} loading="lazy"/><span>VIEW ART ↗</span><i>0{works.indexOf(w)+1}</i></button><div className="workmeta"><div><small>{w[2]}</small><h3>{w[1]}</h3><p>{w[3]}</p></div><button className="download" onClick={()=>download(w)} aria-label={`Download ${w[1]}`}>↓</button></div></article>)}</div><div className="count">YOU'VE SEEN THE WHOLE LITTLE UNIVERSE.<span>08 / 08 ARTWORKS</span></div></section>
+ <section className="manifesto"><div className="manifesto-img"><img src={src("neon-promenade",true)} alt="Neon Promenade artwork" loading="lazy"/><small>ANOTHER KIND OF EVERYDAY</small></div><div className="manifesto-copy"><small>[ MADE WITH INTENTION ]</small><h2>Art for the<br/><em>in-between.</em></h2><p>We believe the little things shape the feeling of a day. The image on your lock screen. The colour that catches your eye. The tiny pause before you open an app.</p><p>Nocturne is an independent wallpaper collection built around atmosphere, story and the beauty of looking a little closer.</p><a href="#collection">EXPLORE THE EDITION ↗</a></div></section>
+ <section className="details" id="details"><div><small>01 / ORIGINAL ART</small><p>Illustrated with a point of view.</p></div><div><small>02 / MADE FOR SCREENS</small><p>High-resolution artwork, ready to save.</p></div><div><small>03 / YOURS TO KEEP</small><p>Download your favourites, keep the feeling.</p></div></section>
+ <footer><div className="footmain"><a className="brand" href="#home"><b>n.</b><span>NOCTURNE<small>WALLPAPERS FOR THE IN-BETWEEN</small></span></a><p>For the screens we spend<br/>our lives looking at.</p><a href="#home">BACK TO THE TOP ↑</a></div><div className="footbottom"><span>© 2026 NOCTURNE STUDIO</span><span>INDEPENDENT DIGITAL ART</span><span>MADE FOR THE IN-BETWEEN.</span></div></footer>
+ {preview&&<div className="modal" role="dialog" aria-modal="true" aria-label={preview[1]} onClick={()=>setPreview(null)}><button className="close" onClick={()=>setPreview(null)} aria-label="Close">×</button><div className="modalinner" onClick={e=>e.stopPropagation()}><img src={src(preview[0],true)} alt={preview[1]}/><div><small>{preview[2]} / NOCTURNE VOL. 001</small><h2>{preview[1]}</h2><p>{preview[3]}</p><button className="button" onClick={()=>download(preview)}>Download artwork ↓</button></div></div></div>}
+ </main>
 }
