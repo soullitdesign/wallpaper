@@ -2,16 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Reveal from "@/components/Reveal";
-import { collectionItem } from "@/components/Nav";
 import { usePack } from "@/lib/pack-context";
-import {
-  collectionPrice,
-  collections,
-  imagePath,
-  money,
-  wallpapers,
-  type Wallpaper,
-} from "@/lib/wallpapers";
+import { collectionPackItem, collectionPrice, collections, imagePath, money, type Wallpaper, wallpapers } from "@/lib/wallpapers";
 
 type Filter = (typeof collections)[number];
 
@@ -167,7 +159,7 @@ function BuyCollectionButton() {
   return (
     <button
       type="button"
-      onClick={() => add(collectionItem())}
+      onClick={() => add(collectionPackItem())}
       className="group flex shrink-0 items-center gap-2 rounded-full bg-cream px-6 py-3 text-[13px] font-medium text-ink transition hover:bg-amber"
     >
       Get all 8
@@ -336,7 +328,7 @@ function Lightbox({
             </button>
             <button
               type="button"
-              onClick={() => add(collectionItem())}
+              onClick={() => add(collectionPackItem())}
               className="w-full rounded-full border border-cream/15 px-5 py-3 text-[13px] text-sand/80 transition hover:border-cream/35 hover:text-cream"
             >
               Or take all 8 for {money(collectionPrice)}

@@ -1,9 +1,8 @@
 "use client";
 
 import Reveal from "@/components/Reveal";
-import { collectionItem } from "@/components/Nav";
 import { usePack } from "@/lib/pack-context";
-import { collectionPrice, imagePath, money, studioPrice } from "@/lib/wallpapers";
+import { collectionPackItem, collectionPrice, imagePath, money, studioPrice } from "@/lib/wallpapers";
 
 const tiers = [
   {
@@ -134,7 +133,7 @@ export default function Pricing() {
                         onClick={() =>
                           add(
                             tier.id === "collection"
-                              ? collectionItem()
+                              ? collectionPackItem()
                               : {
                                   id: "studio",
                                   title: "Studio Licence",

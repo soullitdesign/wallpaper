@@ -2,14 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { DesktopMock, PhoneMock } from "@/components/DeviceMocks";
-import { collectionItem } from "@/components/Nav";
 import { usePack } from "@/lib/pack-context";
-import {
-  collectionPrice,
-  imagePath,
-  money,
-  wallpapers,
-} from "@/lib/wallpapers";
+import { collectionPackItem, collectionPrice, imagePath, money, wallpapers } from "@/lib/wallpapers";
 
 const avatars = [
   { initials: "AM", from: "#E9A84C", to: "#8C3B27" },
@@ -98,7 +92,7 @@ export default function Hero() {
           >
             <button
               type="button"
-              onClick={() => add(collectionItem())}
+              onClick={() => add(collectionPackItem())}
               className="group flex items-center justify-center gap-2 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink transition-colors hover:bg-amber"
             >
               Get the collection

@@ -140,6 +140,16 @@ export function imagePath(slug: string, size: "full" | "card" | "thumb" = "card"
   return `/img/wallpapers/${slug}-${size}.webp`;
 }
 
+export function collectionPackItem() {
+  return {
+    id: "collection",
+    title: "The Midnight Collection",
+    meta: "All 8 pieces · 4K & 5K · lifetime updates",
+    price: collectionPrice,
+    image: imagePath("the-last-waltz", "thumb"),
+  };
+}
+
 export function money(value: number) {
   return `$${value.toFixed(value % 1 === 0 ? 0 : 2)}`;
 }

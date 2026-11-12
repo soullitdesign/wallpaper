@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Reveal from "@/components/Reveal";
-import { collectionItem } from "@/components/Nav";
 import { usePack } from "@/lib/pack-context";
-import { collectionPrice, money } from "@/lib/wallpapers";
+import { collectionPackItem, collectionPrice, money } from "@/lib/wallpapers";
 
 export default function Closing() {
   const { add } = usePack();
@@ -52,7 +51,7 @@ export default function Closing() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button
                   type="button"
-                  onClick={() => add(collectionItem())}
+                  onClick={() => add(collectionPackItem())}
                   className="group flex items-center justify-center gap-2 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink transition hover:bg-amber"
                 >
                   Get the collection · {money(collectionPrice)}

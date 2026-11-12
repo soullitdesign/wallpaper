@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePack } from "@/lib/pack-context";
-import { collectionPrice, imagePath } from "@/lib/wallpapers";
+import { collectionPackItem, collectionPrice } from "@/lib/wallpapers";
 
 const links = [
   { label: "The works", href: "#works" },
@@ -10,16 +10,6 @@ const links = [
   { label: "Pricing", href: "#pricing" },
   { label: "Questions", href: "#faq" },
 ];
-
-export function collectionItem() {
-  return {
-    id: "collection",
-    title: "The Midnight Collection",
-    meta: "All 8 pieces · 4K & 5K · lifetime updates",
-    price: collectionPrice,
-    image: imagePath("the-last-waltz", "thumb"),
-  };
-}
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -93,7 +83,7 @@ export default function Nav() {
 
           <button
             type="button"
-            onClick={() => add(collectionItem())}
+            onClick={() => add(collectionPackItem())}
             className="hidden items-center gap-2 rounded-full bg-cream px-5 py-2.5 text-[13px] font-medium text-ink transition hover:bg-amber sm:flex"
           >
             Get the collection
@@ -139,7 +129,7 @@ export default function Nav() {
             type="button"
             onClick={() => {
               setMenuOpen(false);
-              add(collectionItem());
+              add(collectionPackItem());
             }}
             className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-cream px-5 py-3.5 text-sm font-medium text-ink"
           >

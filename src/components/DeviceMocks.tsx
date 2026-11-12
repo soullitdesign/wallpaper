@@ -1,14 +1,5 @@
 import type { Wallpaper } from "@/lib/wallpapers";
 
-function pad(value: number) {
-  return value.toString().padStart(2, "0");
-}
-
-export function phoneClock() {
-  const now = new Date();
-  return `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-}
-
 export function PhoneMock({
   wallpaper,
   className = "",
