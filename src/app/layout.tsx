@@ -12,5 +12,5 @@ export const metadata:Metadata={
   twitter:{card:"summary_large_image",title:"Soullit Design — Wallpaper Library",description:"Discover wallpapers and digital illustrations by Soullit Design.",images:["/wallpaper/img/wallpapers/the-last-waltz-card.webp"]},
   robots:{index:true,follow:true}
 };
-export const viewport:Viewport={themeColor:"#07142E",width:"device-width",initialScale:1};
+export const viewport:Viewport={themeColor:"#080808",width:"device-width",initialScale:1};
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body>{children}</body></html>}
