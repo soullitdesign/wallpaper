@@ -143,7 +143,13 @@
     text-transform: uppercase;
   }
 
+  /* Visible by default (no-JS friendly); hidden only once JS is known to run. */
   .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .reveal {
     opacity: 0;
     transform: translateY(26px);
     transition:
@@ -153,7 +159,7 @@
     will-change: opacity, transform;
   }
 
-  .reveal.is-in {
+  .js .reveal.is-in {
     opacity: 1;
     transform: none;
   }
@@ -189,7 +195,7 @@
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
     transition: none;

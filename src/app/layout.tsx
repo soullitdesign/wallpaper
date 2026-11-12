@@ -42,7 +42,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="grain">{children}</body>
+      <body className="grain">
+        <script
+          // Marks the document as JS-capable before paint, so scroll reveals can
+          // start hidden without leaving a blank page when JS is unavailable.
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
