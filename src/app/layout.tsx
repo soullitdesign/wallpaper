@@ -1,63 +1,54 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/fraunces";
-import "@fontsource-variable/fraunces/wght-italic.css";
 import "@fontsource-variable/inter";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { StoreHydrator } from "@/components/StoreHydrator";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nocturne.studio"),
-  title: {
-    default: "Nocturne Studio — Hand-painted wallpapers for after dark",
-    template: "%s · Nocturne Studio",
-  },
+  title: "Nocturne — Wallpapers painted for after dark",
   description:
-    "Cinematic, hand-painted wallpapers in midnight blue, candle crimson and lamplight amber. 5K files and eighteen crops for every screen. Instant download.",
+    "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download, one payment, yours forever.",
   keywords: [
-    "wallpapers",
+    "digital wallpapers",
     "phone wallpaper",
     "desktop wallpaper",
-    "midnight blue",
-    "hand-painted",
-    "digital art",
-    "wallpaper pack",
+    "illustrated wallpaper",
+    "4K wallpapers",
+    "art wallpaper pack",
   ],
+  authors: [{ name: "Nocturne Studio" }],
   openGraph: {
-    title: "Nocturne Studio — Wallpaper for the hours after everyone leaves",
+    title: "Nocturne — Wallpapers painted for after dark",
     description:
-      "Hand-painted wallpapers in midnight blue and candle crimson. 5K files, every crop, instant download.",
+      "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download.",
     type: "website",
-    images: [{ url: "/img/wallpapers/the-last-waltz-card.webp", width: 720, height: 900 }],
+    siteName: "Nocturne Studio",
+    images: [{ url: "/img/wallpapers/the-last-waltz-card.webp", width: 900, height: 1200 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nocturne Studio",
-    description: "Hand-painted wallpapers for after dark.",
-    images: ["/img/wallpapers/the-last-waltz-card.webp"],
+    title: "Nocturne — Wallpapers painted for after dark",
+    description:
+      "Original night-lit illustrations for your phone, tablet and desktop. 4K & 5K, instant download.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070b1c",
-  colorScheme: "dark",
+  themeColor: "#08080b",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="grain antialiased">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-cream focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-ink-900"
-        >
-          Skip to content
-        </a>
-        <StoreHydrator />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+    <html lang="en">
+      <body className="grain">
+        <script
+          // Marks the document as JS-capable before paint, so scroll reveals can
+          // start hidden without leaving a blank page when JS is unavailable.
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
+        {children}
       </body>
     </html>
   );

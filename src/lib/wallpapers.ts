@@ -1,183 +1,155 @@
 export type Wallpaper = {
   slug: string;
   title: string;
-  subtitle: string;
-  collection: "Crimson Hour" | "Midnight Streets" | "Quiet Rooms";
-  tags: string[];
-  /** Base price in USD cents for the personal licence. */
+  collection: "City Lights" | "Romance" | "Solitude";
   price: number;
-  compareAt?: number;
-  featured?: boolean;
-  /** Human readable story shown in the detail drawer. */
+  blurb: string;
   story: string;
-  /** Dominant colours, sampled from the artwork itself. */
-  palette: string[];
-  accent: string;
+  palette: { name: string; hex: string }[];
 };
 
 export const wallpapers: Wallpaper[] = [
   {
-    slug: "the-last-waltz",
-    title: "The Last Waltz",
-    subtitle: "A room full of strangers, one pair of eyes",
-    collection: "Crimson Hour",
-    tags: ["Romance", "Night", "Figure"],
-    price: 600,
-    compareAt: 900,
+    slug: "blue-hour",
+    title: "Blue Hour",
+    collection: "City Lights",
+    price: 4,
+    blurb: "A walk home under lamplight, long after the rain.",
     story:
-      "The floor tilts, the string lights blur, and for one frame the whole party belongs to her. Paint the night you wish you had stayed out for.",
-    palette: ["#070B1C", "#1C274B", "#882A27", "#D99C75"],
-    accent: "#882A27",
-  },
-  {
-    slug: "sunflowers-at-midnight",
-    title: "Sunflowers at Midnight",
-    subtitle: "He waited past the last lamp going out",
-    collection: "Crimson Hour",
-    tags: ["Romance", "Hope", "Figure"],
-    price: 600,
-    compareAt: 900,
-    story:
-      "A coat too thin for the cold, a bouquet too bright for the hour. One small act of ridiculous, unashamed hope.",
-    palette: ["#0A0D1F", "#151D43", "#986E4F", "#F0C86A"],
-    accent: "#D99C75",
-  },
-  {
-    slug: "neon-promenade",
-    title: "Neon Promenade",
-    subtitle: "One umbrella, two shadows",
-    collection: "Midnight Streets",
-    tags: ["Couple", "Rain", "City"],
-    price: 600,
-    story:
-      "Rain turns every street into a mirror and every mirror into a slow, glowing walk home.",
-    palette: ["#0D142F", "#1C274B", "#D99C75", "#8B5E60"],
-    accent: "#D99C75",
-  },
-  {
-    slug: "rooftop-reverie",
-    title: "Rooftop Reverie",
-    subtitle: "The city, keeping you company",
-    collection: "Quiet Rooms",
-    tags: ["Solitude", "City", "Night"],
-    price: 600,
-    compareAt: 900,
-    featured: true,
-    story:
-      "Half a million windows lit and not one of them yours yet. Somehow that is the comforting part.",
-    palette: ["#070B1C", "#1C274B", "#D99C75", "#583E54"],
-    accent: "#D99C75",
+      "The street empties, the lamps come on, and the pavement turns to glass. Painted for anyone who has ever taken the long way home on purpose.",
+    palette: [
+      { name: "Rain Navy", hex: "#152441" },
+      { name: "Lamp Gold", hex: "#E0A55C" },
+      { name: "Wet Slate", hex: "#42506A" },
+      { name: "Fog", hex: "#8B97A8" },
+    ],
   },
   {
     slug: "the-last-train",
     title: "The Last Train",
-    subtitle: "Nobody left on the platform but you",
-    collection: "Midnight Streets",
-    tags: ["Solitude", "Travel", "Noir"],
-    price: 600,
+    collection: "Solitude",
+    price: 4,
+    blurb: "A vending machine hum, a paper cup, and the 1:42 to nowhere.",
     story:
-      "Vending machine light, cold coffee, and the particular peace of a station at 1 a.m. when the city has finally stopped talking.",
-    palette: ["#0A0D1F", "#1C274B", "#3D5A8C", "#D99C75"],
-    accent: "#3D5A8C",
+      "The platform is empty except for the vending machine and one man who isn't ready to go home. Every light in this piece is a small act of company.",
+    palette: [
+      { name: "Platform Blue", hex: "#1B2C4A" },
+      { name: "Vending Ice", hex: "#BFD4E8" },
+      { name: "Sodium Light", hex: "#D99A4E" },
+      { name: "Trench", hex: "#20242F" },
+    ],
   },
   {
     slug: "candlelight-waltz",
     title: "Candlelight Waltz",
-    subtitle: "Crimson silk in an empty hall",
-    collection: "Crimson Hour",
-    tags: ["Romance", "Dance", "Candlelight"],
-    price: 600,
-    compareAt: 900,
+    collection: "Romance",
+    price: 4,
+    blurb: "Two figures, one umbrella, and a city lit like a birthday cake.",
     story:
-      "Moonlight through arched glass, a single candle left burning, and a dance no one else was invited to watch.",
-    palette: ["#070B1C", "#1C274B", "#882A27", "#D99C75"],
-    accent: "#882A27",
+      "The rain does not stop and neither do they. A love letter to the kind of evening that ruins your shoes and fixes your week.",
+    palette: [
+      { name: "Midnight Velvet", hex: "#1A2740" },
+      { name: "Gaslight", hex: "#F0B25E" },
+      { name: "Rust Scarf", hex: "#A84A34" },
+      { name: "Cobblestone", hex: "#3C3B44" },
+    ],
   },
   {
-    slug: "blue-hour",
-    title: "Blue Hour",
-    subtitle: "The last honest light of the day",
-    collection: "Midnight Streets",
-    tags: ["Solitude", "Rain", "City"],
-    price: 600,
+    slug: "the-last-waltz",
+    title: "The Last Waltz",
+    collection: "Romance",
+    price: 4,
+    blurb: "The party is ending. She is only just beginning.",
     story:
-      "That narrow window after sunset when the streetlights are not quite winning and the sky is still deciding.",
-    palette: ["#070818", "#151D43", "#1C274B", "#D99C75"],
-    accent: "#151D43",
+      "String lights overhead, a borrowed phone held high, and a red dress that refuses to sit this one out. Energy, captured mid-turn.",
+    palette: [
+      { name: "Dance Crimson", hex: "#A72E2A" },
+      { name: "Ink Navy", hex: "#131C33" },
+      { name: "Bulb Amber", hex: "#F5C06B" },
+      { name: "Floor Rose", hex: "#D98A6E" },
+    ],
   },
   {
     slug: "paper-moon",
     title: "Paper Moon",
-    subtitle: "A window, a book, a city going by",
-    collection: "Quiet Rooms",
-    tags: ["Solitude", "Travel", "Rain"],
-    price: 600,
+    collection: "Solitude",
+    price: 4,
+    blurb: "A window seat, a sleeping city, and rain that won't commit.",
     story:
-      "Streaking lights on wet glass, a scarf that smells like someone else, and a chapter you have read three times.",
-    palette: ["#0A0D1F", "#1C274B", "#882A27", "#D99C75"],
-    accent: "#D99C75",
+      "Somewhere between two stations, a girl watches the city smear into streaks of blue. This is the quietest piece in the collection.",
+    palette: [
+      { name: "Window Blue", hex: "#1C3550" },
+      { name: "City Bokeh", hex: "#7FB2D6" },
+      { name: "Carriage Wine", hex: "#752F33" },
+      { name: "Skin Warmth", hex: "#C08A6E" },
+    ],
+  },
+  {
+    slug: "rooftop-reverie",
+    title: "Rooftop Reverie",
+    collection: "Solitude",
+    price: 4,
+    blurb: "The whole city asleep, and one girl wide awake above it.",
+    story:
+      "String lights, a crescent moon, and a thousand windows that all belong to someone else. A reminder that being alone can be beautiful.",
+    palette: [
+      { name: "Night Sky", hex: "#0E1730" },
+      { name: "Wool Cream", hex: "#D9C9B4" },
+      { name: "Crescent", hex: "#F4D79B" },
+      { name: "Town Warmth", hex: "#B07A45" },
+    ],
+  },
+  {
+    slug: "neon-promenade",
+    title: "Neon Promenade",
+    collection: "City Lights",
+    price: 4,
+    blurb: "The old town dripping gold after a downpour.",
+    story:
+      "Spires, shop lights, wet stone, and two heads bent together beneath an umbrella. It is a postcard from a city that never quite existed.",
+    palette: [
+      { name: "Rain Indigo", hex: "#18243D" },
+      { name: "Lantern Gold", hex: "#E9A94C" },
+      { name: "Rose Stone", hex: "#8F3F44" },
+      { name: "Wet Shale", hex: "#5A5E6B" },
+    ],
+  },
+  {
+    slug: "sunflowers-at-midnight",
+    title: "Sunflowers at Midnight",
+    collection: "Romance",
+    price: 4,
+    blurb: "A bouquet too bright for this hour, and a smile to match.",
+    story:
+      "He walked out of the flower shop after closing and decided the night was not over. The warmest piece we have made — literally.",
+    palette: [
+      { name: "Starry Navy", hex: "#111A33" },
+      { name: "Marigold", hex: "#E8A63B" },
+      { name: "Suit Black", hex: "#1D1B20" },
+      { name: "Brick", hex: "#9A5B3F" },
+    ],
   },
 ];
 
-export const collections = ["All", "Crimson Hour", "Midnight Streets", "Quiet Rooms"] as const;
+export const collections = ["All", "City Lights", "Romance", "Solitude"] as const;
 
-/** Bundle: any 3 wallpapers for this price (cents). */
-export const bundlePrice = 1200;
+export const collectionPrice = 19;
+export const studioPrice = 59;
 
-export type Licence = {
-  id: "personal" | "extended";
-  name: string;
-  priceMultiplier: number;
-  blurb: string;
-  perks: string[];
-  maxSeats: string;
-};
-
-export const licences: Licence[] = [
-  {
-    id: "personal",
-    name: "Personal",
-    priceMultiplier: 1,
-    blurb: "For your own phone, tablet, desktop and lock screen.",
-    perks: [
-      "5K files for phone, tablet & desktop",
-      "All crops: 9:16, 16:10, 4:3, iPad",
-      "Printable poster size included",
-      "Personal use, non-commercial",
-    ],
-    maxSeats: "1 device household",
-  },
-  {
-    id: "extended",
-    name: "Extended",
-    priceMultiplier: 2.4,
-    blurb: "For creators, studios and brands who want to use the art commercially.",
-    perks: [
-      "Everything in Personal",
-      "Commercial use in your own projects",
-      "Social media, print, video & merchandise",
-      "Signed licence certificate PDF",
-    ],
-    maxSeats: "Unlimited within your studio",
-  },
-];
-
-export function getWallpaper(slug: string) {
-  return wallpapers.find((w) => w.slug === slug);
+export function imagePath(slug: string, size: "full" | "card" | "thumb" = "card") {
+  return `/img/wallpapers/${slug}-${size}.webp`;
 }
 
-export function money(cents: number) {
-  const whole = Number.isInteger(cents / 100);
-  return (cents / 100).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    // "$6" for round prices, "$14.40" whenever there are cents to show.
-    minimumFractionDigits: whole ? 0 : 2,
-    maximumFractionDigits: whole ? 0 : 2,
-  });
+export function collectionPackItem() {
+  return {
+    id: "collection",
+    title: "The Midnight Collection",
+    meta: "All 8 pieces · 4K & 5K · lifetime updates",
+    price: collectionPrice,
+    image: imagePath("the-last-waltz", "thumb"),
+  };
 }
 
-/** Cents → clean label like "$6" or "$14.40". */
-export function priceLabel(cents: number) {
-  return money(cents);
+export function money(value: number) {
+  return `$${value.toFixed(value % 1 === 0 ? 0 : 2)}`;
 }

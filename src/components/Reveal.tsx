@@ -1,46 +1,56 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
 
-/** Fades + lifts children into view once, when scrolled to. */
-export function Reveal({
+type RevealProps = {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+  as?: "div" | "section" | "li" | "span";
+};
+
+export default function Reveal({
   children,
   delay = 0,
-  as: Tag = "div",
   className = "",
-}: {
-  children: ReactNode;
-  delay?: number;
-  as?: "div" | "section" | "li" | "article" | "header";
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+  as: Tag = "div",
+}: RevealProps) {
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (typeof IntersectionObserver === "undefined") return setShown(true);
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          io.disconnect();
+
+    if (
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      el.classList.add("is-in");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            observer.disconnect();
+          }
         }
       },
-      { rootMargin: "0px 0px -6% 0px", threshold: 0.02 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.06 },
     );
-    io.observe(el);
-    return () => io.disconnect();
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <Tag
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
+      // @ts-expect-error — generic element ref
+      ref={ref}
       className={`reveal ${className}`}
-      data-shown={shown}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
     >
       {children}
     </Tag>
