@@ -21,7 +21,7 @@ export default function NotFound() {
         href="/"
         className="mt-9 rounded-full bg-cream px-7 py-3.5 text-sm font-medium text-ink transition hover:bg-amber"
       >
-        Back to Nocturne
+        Back to Soullit Design
       </Link>
     </main>
   );
