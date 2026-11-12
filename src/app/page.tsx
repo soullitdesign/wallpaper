@@ -4,85 +4,131 @@ import { useMemo, useState } from "react";
 
 type Artwork = {
   id: string; title: string; category: string; description: string;
-  tags: string[]; ratio: string; kind: "Wallpaper" | "Illustration";
+  tags: string[]; kind: "Wallpaper" | "Illustration"; number: string;
 };
 
 const artworks: Artwork[] = [
-  { id:"the-last-waltz", title:"The Last Waltz", category:"Romance", description:"A dance beneath a thousand quiet stars.", tags:["Wallpaper","Desktop","Dreamy"], ratio:"4 / 5", kind:"Wallpaper" },
-  { id:"blue-hour", title:"Blue Hour", category:"Stillness", description:"Where the city learns to breathe.", tags:["4K","Desktop","Landscape"], ratio:"5 / 4", kind:"Wallpaper" },
-  { id:"neon-promenade", title:"Neon Promenade", category:"After dark", description:"A little electric, a little nostalgic.", tags:["Anime","Desktop","Night"], ratio:"4 / 5", kind:"Illustration" },
-  { id:"paper-moon", title:"Paper Moon", category:"Dreamscape", description:"A softer place to disappear.", tags:["Wallpaper","Pastel","Dreamy"], ratio:"3 / 4", kind:"Illustration" },
-  { id:"rooftop-reverie", title:"Rooftop Reverie", category:"Stillness", description:"Somewhere between here and the skyline.", tags:["4K","Landscape","Nature"], ratio:"5 / 4", kind:"Wallpaper" },
-  { id:"sunflowers-at-midnight", title:"Sunflowers at Midnight", category:"Dreamscape", description:"For the ones who bloom after dark.", tags:["Nature","Wallpaper","Desktop"], ratio:"4 / 5", kind:"Illustration" },
-  { id:"the-last-train", title:"The Last Train", category:"After dark", description:"The beautiful things between destinations.", tags:["Anime","Landscape","Night"], ratio:"5 / 4", kind:"Wallpaper" },
-  { id:"candlelight-waltz", title:"Candlelight Waltz", category:"Romance", description:"A room full of almost-forgotten warmth.", tags:["Pastel","Wallpaper","Dreamy"], ratio:"4 / 5", kind:"Illustration" }
+  { id:"the-last-waltz", title:"The Last Waltz", category:"Romance", description:"A quiet dance beneath a thousand distant stars.", tags:["Wallpaper","Desktop","Dreamy"], kind:"Wallpaper", number:"01" },
+  { id:"blue-hour", title:"Blue Hour", category:"Stillness", description:"The city slows down, and the sky has the final word.", tags:["4K","Desktop","Landscape"], kind:"Wallpaper", number:"02" },
+  { id:"neon-promenade", title:"Neon Promenade", category:"After dark", description:"A little electric, a little nostalgic. A night worth remembering.", tags:["Anime","Desktop","Night"], kind:"Illustration", number:"03" },
+  { id:"paper-moon", title:"Paper Moon", category:"Dreamscape", description:"A softer place to disappear for a while.", tags:["Wallpaper","Pastel","Dreamy"], kind:"Illustration", number:"04" },
+  { id:"rooftop-reverie", title:"Rooftop Reverie", category:"Stillness", description:"Somewhere between the skyline and a slower state of mind.", tags:["4K","Landscape","Nature"], kind:"Wallpaper", number:"05" },
+  { id:"sunflowers-at-midnight", title:"Sunflowers at Midnight", category:"Dreamscape", description:"For the ones who find a way to bloom after dark.", tags:["Nature","Wallpaper","Desktop"], kind:"Illustration", number:"06" },
+  { id:"the-last-train", title:"The Last Train", category:"After dark", description:"A small reminder that the journey can be the beautiful part.", tags:["Anime","Landscape","Night"], kind:"Wallpaper", number:"07" },
+  { id:"candlelight-waltz", title:"Candlelight Waltz", category:"Romance", description:"A room full of warmth, memory and almost-forgotten moments.", tags:["Pastel","Wallpaper","Dreamy"], kind:"Illustration", number:"08" }
 ];
 
 const categories = ["All","Nature","Dreamy","Landscape","Anime","Night","Romance"];
-const image = (id:string, full=false) => "/wallpaper/img/wallpapers/" + id + "-" + (full ? "full" : "card") + ".webp";
+const image = (id: string, full = false) => "/wallpaper/img/wallpapers/" + id + "-" + (full ? "full" : "card") + ".webp";
 
-function Icon({name}:{name:string}) {
-  const common={width:17,height:17,viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:1.7,strokeLinecap:"round" as const,strokeLinejoin:"round" as const, "aria-hidden":true as const};
-  const paths:Record<string,React.ReactNode>={
-    search:<><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></>,
-    arrow:<><path d="M5 12h14m-6-6 6 6-6 6"/></>,
-    download:<><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 18v3h14v-3"/></>,
-    bookmark:<><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-4-6 4V4.5Z"/></>,
-    close:<><path d="m6 6 12 12M18 6 6 18"/></>,
-    plus:<><path d="M12 5v14M5 12h14"/></>
-  };
-  return <svg {...common}>{paths[name]||paths.arrow}</svg>;
-}
+function Arrow() { return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>; }
+function Mark() { return <span className="sd-mark" aria-hidden="true">S<span>.</span></span>; }
 
 export default function Home() {
-  const [query,setQuery]=useState("");
-  const [active,setActive]=useState("All");
-  const [kind,setKind]=useState("All");
-  const [sort,setSort]=useState("Featured");
-  const [visible,setVisible]=useState(8);
-  const [selected,setSelected]=useState<Artwork>(artworks[0]);
-  const [preview,setPreview]=useState<Artwork|null>(null);
-  const [saved,setSaved]=useState<string[]>([]);
-  const filtered=useMemo(()=>{
-    let list=artworks.filter(a=>{
-      const q=query.trim().toLowerCase();
-      const search=!q||[a.title,a.category,a.description,...a.tags].join(" ").toLowerCase().includes(q);
-      const type=kind==="All"||(kind==="Wallpapers"&&a.kind==="Wallpaper")||(kind==="Illustrations"&&a.kind==="Illustration");
-      return search&&type&&(active==="All"||a.tags.some(t=>t.toLowerCase()===active.toLowerCase())||a.category.toLowerCase()===active.toLowerCase());
+  const [query,setQuery] = useState("");
+  const [active,setActive] = useState("All");
+  const [kind,setKind] = useState("All");
+  const [sort,setSort] = useState("Featured");
+  const [visible,setVisible] = useState(8);
+  const [preview,setPreview] = useState<Artwork|null>(null);
+  const [saved,setSaved] = useState<string[]>([]);
+  const filtered = useMemo(() => {
+    let list = artworks.filter(a => {
+      const q = query.trim().toLowerCase();
+      const matches = !q || [a.title,a.category,a.description,...a.tags].join(" ").toLowerCase().includes(q);
+      const type = kind === "All" || (kind === "Wallpapers" && a.kind === "Wallpaper") || (kind === "Illustrations" && a.kind === "Illustration");
+      return matches && type && (active === "All" || a.tags.some(t => t.toLowerCase() === active.toLowerCase()) || a.category.toLowerCase() === active.toLowerCase());
     });
-    if(sort==="A–Z") list=[...list].sort((a,b)=>a.title.localeCompare(b.title));
-    if(sort==="Newest") list=[...list].reverse();
+    if (sort === "A–Z") list = [...list].sort((a,b) => a.title.localeCompare(b.title));
+    if (sort === "Newest") list = [...list].reverse();
     return list;
   },[query,active,kind,sort]);
-  function download(item:Artwork){
-    const a=document.createElement("a");a.href=image(item.id,true);a.download="soullit-design-"+item.id+".webp";document.body.appendChild(a);a.click();a.remove();
+
+  function download(item: Artwork) {
+    const link = document.createElement("a");
+    link.href = image(item.id,true);
+    link.download = "soullit-design-" + item.id + ".webp";
+    document.body.appendChild(link); link.click(); link.remove();
   }
-  function toggleSave(id:string){setSaved(current=>current.includes(id)?current.filter(x=>x!==id):[...current,id]);}
-  return <main className="site-shell" id="top">
-    <header className="masthead">
-      <a className="brand" href="#top" aria-label="Soullit Design home"><span className="brand-mark">S.</span><span className="brand-name">SOULLIT DESIGN<small>WALLPAPER ARCHIVE</small></span></a>
-      <div className="header-center"><span>AN INDEPENDENT ART & WALLPAPER COLLECTION</span></div>
-      <a className="request-link" href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer"><Icon name="plus"/> Request artwork</a>
+  function toggleSave(id: string) { setSaved(current => current.includes(id) ? current.filter(x => x !== id) : [...current,id]); }
+
+  return <main className="studio" id="top">
+    <header className="topbar">
+      <a className="identity" href="#top" aria-label="Soullit Design home"><Mark/><span>SOULLIT DESIGN<small>INDEPENDENT ART STUDIO</small></span></a>
+      <nav className="main-nav" aria-label="Main navigation">
+        <a href="#collection">collection</a><a href="#approach">the approach</a><a href="#about">about</a>
+      </nav>
+      <a className="contact-link" href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">request a wallpaper <Arrow/></a>
     </header>
 
-    <section className="intro">
-      <div className="intro-copy"><p className="overline">THE DIGITAL CANVAS / VOL. 01</p><h1>Find your<br/><em>point of view.</em></h1><p className="intro-text">A considered collection of wallpapers and digital art, made to give your everyday screen a little more character.</p></div>
-      <div className="intro-side"><span className="intro-index">01 — 08</span><span className="intro-rule"></span><p>CURATED VISUALS<br/>FOR YOUR EVERYDAY</p><a href="#gallery">EXPLORE THE ARCHIVE <Icon name="arrow"/></a></div>
-      <div className="intro-art"><img src={image("blue-hour")} alt="Blue Hour atmospheric landscape wallpaper"/><span>FEATURED / 001</span></div>
+    <section className="hero">
+      <div className="hero-copy">
+        <p className="eyebrow"><span>INDEPENDENT DIGITAL ART</span><i/> EST. 2026</p>
+        <h1>Make room<br/>for <em>feeling.</em></h1>
+        <p className="hero-intro">A growing collection of digital wallpapers and visual stories, created to make the everyday feel a little less ordinary.</p>
+        <div className="hero-actions"><a className="button-light" href="#collection">Explore the collection <Arrow/></a><span className="hero-note">ORIGINAL ARTWORKS<br/>MADE TO LIVE ON YOUR SCREEN</span></div>
+      </div>
+      <div className="hero-visual">
+        <img src={image("the-last-waltz")} alt="The Last Waltz — featured Soullit Design artwork"/>
+        <div className="hero-image-label"><span>FEATURED ARTWORK / 001</span><span>THE LAST WALTZ ↗</span></div>
+        <div className="hero-index">SD—001</div>
+      </div>
+      <div className="hero-foot"><span>ART THAT STAYS WITH YOU.</span><a href="#collection">SCROLL TO EXPLORE ↓</a><span>01 / 04 — THE STUDIO</span></div>
     </section>
 
-    <section className="archive" id="gallery">
-      <div className="archive-heading"><div><p className="overline">THE COLLECTION</p><h2>Wallpaper archive<span>({filtered.length.toString().padStart(2,"0")})</span></h2></div><div className="archive-search"><Icon name="search"/><input value={query} onChange={e=>{setQuery(e.target.value);setVisible(8);}} placeholder="Search the archive" aria-label="Search the archive"/>{query&&<button onClick={()=>setQuery("")} aria-label="Clear search"><Icon name="close"/></button>}</div></div>
-      <div className="archive-controls"><div className="filter-list">{categories.map(c=><button key={c} className={active===c?"active":""} onClick={()=>{setActive(c);setVisible(8);}}>{c}</button>)}</div><div className="sort-controls"><button className={kind==="All"?"active":""} onClick={()=>setKind("All")}>All work</button><button className={kind==="Wallpapers"?"active":""} onClick={()=>setKind("Wallpapers")}>Wallpapers</button><button className={kind==="Illustrations"?"active":""} onClick={()=>setKind("Illustrations")}>Illustrations</button><select value={sort} onChange={e=>setSort(e.target.value)} aria-label="Sort artwork"><option>Featured</option><option>Newest</option><option>A–Z</option></select></div></div>
-      {filtered.length===0?<div className="empty-state"><p>NO RESULTS FOUND</p><h3>Nothing in this frame.</h3><button onClick={()=>{setQuery("");setActive("All");setKind("All");}}>Reset filters <Icon name="arrow"/></button></div>:
-      <div className="art-grid">{filtered.slice(0,visible).map((item,index)=><article className="art-card" key={item.id}><button className="art-image" onClick={()=>{setSelected(item);setPreview(item);}} aria-label={"Open "+item.title}><img src={image(item.id)} alt={item.title} loading={index<4?"eager":"lazy"}/><span className="view-label">VIEW ARTWORK <Icon name="arrow"/></span></button><div className="art-caption"><button className="art-title" onClick={()=>{setSelected(item);setPreview(item);}}><span>{item.title}</span><small>{item.category} / {item.kind}</small></button><button className={saved.includes(item.id)?"save-button is-saved":"save-button"} onClick={()=>toggleSave(item.id)} aria-label={saved.includes(item.id)?"Unsave artwork":"Save artwork"}><Icon name="bookmark"/></button></div></article>)}</div>}
-      {filtered.length>visible&&<button className="more-button" onClick={()=>setVisible(v=>v+4)}>LOAD MORE <Icon name="plus"/></button>}
+    <section className="manifesto" id="about">
+      <div className="section-kicker"><span>01 — THE STUDIO</span><span>A NOTE ON WHAT WE MAKE</span></div>
+      <div className="manifesto-grid">
+        <h2>Not just a<br/><em>background.</em></h2>
+        <div className="manifesto-copy"><p className="lead">A screen is a space you return to every day. It should feel like yours.</p><p>Soullit Design is an independent creative studio exploring mood, memory and imagination through digital art. Each piece is made to bring a little atmosphere to the devices we live with — thoughtful visuals, considered details and stories that leave room for your own.</p><a href="#approach" className="text-link">A LITTLE ABOUT OUR PROCESS <Arrow/></a></div>
+      </div>
+      <div className="studio-stats"><div><strong>08</strong><span>ARTWORKS IN THE ARCHIVE</span></div><div><strong>02</strong><span>WAYS TO EXPLORE</span></div><div><strong>∞</strong><span>WAYS TO MAKE IT YOURS</span></div><p>THE COLLECTION IS ALWAYS IN PROGRESS.</p></div>
     </section>
 
-    <section className="request-banner"><div><p className="overline">HAVE SOMETHING IN MIND?</p><h2>Your screen.<br/><em>Your atmosphere.</em></h2></div><a href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">REQUEST A WALLPAPER <Icon name="arrow"/></a></section>
+    <section className="collection" id="collection">
+      <div className="section-kicker"><span>02 — SELECTED WORKS</span><span>THE DIGITAL WALL / VOL. 01</span></div>
+      <div className="collection-heading"><div><p className="eyebrow">FIND YOUR NEXT FAVOURITE</p><h2>The <em>collection.</em></h2></div><p>Small worlds, different moods.<br/>Find the one that feels like you.</p></div>
+      <div className="collection-tools">
+        <div className="collection-tabs">{["All","Wallpapers","Illustrations"].map(t=><button key={t} className={kind===t?"active":""} onClick={()=>{setKind(t);setVisible(8);}}>{t}</button>)}</div>
+        <label className="search-box"><span>⌕</span><input value={query} onChange={e=>{setQuery(e.target.value);setVisible(8);}} placeholder="Search artworks..." aria-label="Search artworks"/>{query&&<button onClick={()=>setQuery("")} aria-label="Clear search">×</button>}</label>
+      </div>
+      <div className="category-row"><div className="category-list">{categories.map(c=><button key={c} className={active===c?"chosen":""} onClick={()=>{setActive(c);setVisible(8);}}>{c}</button>)}</div><label className="sort-label">SORT BY <select value={sort} onChange={e=>setSort(e.target.value)}><option>Featured</option><option>Newest</option><option>A–Z</option></select></label></div>
+      {filtered.length===0 ? <div className="no-results"><span>NOTHING IN THIS FRAME</span><h3>Try another search.</h3><button onClick={()=>{setQuery("");setActive("All");setKind("All");}}>Reset collection <Arrow/></button></div> :
+      <div className="artwork-grid">{filtered.slice(0,visible).map((item,index)=><article className={"artwork-card card-"+(index%4+1)} key={item.id}>
+        <button className="artwork-image" onClick={()=>setPreview(item)} aria-label={"Preview "+item.title}><img src={image(item.id)} alt={item.title} loading={index<3?"eager":"lazy"}/><span className="image-number">{item.number} / 08</span><span className="image-open">VIEW ARTWORK <Arrow/></span></button>
+        <div className="artwork-caption"><div><span className="artwork-category">{item.category} — {item.kind}</span><h3>{item.title}</h3></div><button className={saved.includes(item.id)?"save active":"save"} onClick={()=>toggleSave(item.id)} aria-label={saved.includes(item.id)?"Remove saved artwork":"Save artwork"}>{saved.includes(item.id)?"♥":"＋"}</button></div>
+      </article>)}</div>}
+      {filtered.length>visible&&<button className="load-more" onClick={()=>setVisible(v=>v+4)}>LOAD MORE ARTWORKS <span>＋</span></button>}
+      <div className="collection-end"><span>YOU'VE REACHED THE END — FOR NOW.</span><span>{filtered.length.toString().padStart(2,"0")} PIECES / SOULLIT DESIGN</span></div>
+    </section>
 
-    <footer className="footer"><a className="footer-brand" href="#top">SOULLIT DESIGN<span>© 2026</span></a><p>Made with intent. Shared with you.</p><a href="#top">BACK TO TOP ↑</a></footer>
+    <section className="feature-story">
+      <div className="feature-image"><img src={image("blue-hour")} alt="Blue Hour — atmospheric city artwork"/><span>STUDY 002 / BLUE HOUR</span></div>
+      <div className="feature-copy"><p className="eyebrow">03 — A CLOSER LOOK</p><h2>Somewhere<br/>between <em>light</em><br/>and silence.</h2><p>We like the in-between moments. The last light before evening, a city before it wakes, the feeling of being exactly where you need to be.</p><a href="#collection" className="text-link">DISCOVER THE COLLECTION <Arrow/></a><span className="feature-index">A STUDY IN STILLNESS / 2026</span></div>
+    </section>
 
-    {preview&&<div className="lightbox" role="dialog" aria-modal="true" aria-label={preview.title} onClick={()=>setPreview(null)}><button className="lightbox-close" onClick={()=>setPreview(null)} aria-label="Close preview"><Icon name="close"/></button><div className="lightbox-content" onClick={e=>e.stopPropagation()}><img src={image(preview.id,true)} alt={preview.title}/><div className="lightbox-info"><p className="overline">{preview.category} / SOULLIT DESIGN</p><h2>{preview.title}</h2><p>{preview.description}</p><button onClick={()=>download(preview)}><Icon name="download"/> DOWNLOAD WALLPAPER</button></div></div></div>}
+    <section className="approach" id="approach">
+      <div className="section-kicker"><span>04 — THE APPROACH</span><span>FROM IDEA TO YOUR SCREEN</span></div>
+      <div className="approach-heading"><h2>Made with <em>intention.</em></h2><p>Every artwork starts with a feeling. The rest is a process of finding the right form for it.</p></div>
+      <div className="process-list">
+        <div><span>01</span><h3>Find the feeling</h3><p>A mood, a memory, a place or a small moment worth holding onto.</p><b>IDEA / DIRECTION</b></div>
+        <div><span>02</span><h3>Build the frame</h3><p>We explore composition, colour, light and detail until the image feels right.</p><b>ART / COMPOSITION</b></div>
+        <div><span>03</span><h3>Make it yours</h3><p>Choose a piece, preview it and bring a new point of view to your screen.</p><b>DISCOVER / DOWNLOAD</b></div>
+      </div>
+    </section>
+
+    <section className="request-section">
+      <div className="request-art"><img src={image("candlelight-waltz")} alt="Candlelight Waltz artwork"/></div>
+      <div className="request-copy"><p className="eyebrow">05 — YOUR IDEA, OUR NEXT CANVAS</p><h2>Have a mood<br/>in <em>mind?</em></h2><p>Tell us what you'd love to see next. A place, a colour, a feeling, a whole different world — your request could inspire the next piece in the collection.</p><a className="button-light" href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">Request a wallpaper <Arrow/></a><span>MADE TO BE DISCOVERED. MADE TO BE SHARED.</span></div>
+    </section>
+
+    <footer className="footer">
+      <a className="footer-identity" href="#top"><Mark/><span>SOULLIT DESIGN<small>INDEPENDENT ART STUDIO</small></span></a>
+      <p>Art for the spaces you call your own.</p>
+      <div className="footer-links"><a href="#collection">COLLECTION</a><a href="https://github.com/soullitdesign/wallpaper/issues/new?template=wallpaper-request.yml" target="_blank" rel="noreferrer">REQUEST ART</a><a href="#top">BACK TO TOP ↑</a></div>
+      <div className="copyright"><span>© 2026 SOULLIT DESIGN</span><span>INDEPENDENTLY MADE / SHARED WITH YOU</span></div>
+    </footer>
+
+    {preview&&<div className="preview-overlay" role="dialog" aria-modal="true" aria-label={preview.title} onClick={()=>setPreview(null)}><button className="preview-close" onClick={()=>setPreview(null)} aria-label="Close preview">×</button><div className="preview-panel" onClick={e=>e.stopPropagation()}><img src={image(preview.id,true)} alt={preview.title}/><div className="preview-details"><p className="eyebrow">{preview.number} / SOULLIT DESIGN — {preview.category}</p><h2>{preview.title}</h2><p>{preview.description}</p><button onClick={()=>download(preview)}>DOWNLOAD WALLPAPER <Arrow/></button><small>PERSONAL USE / ORIGINAL DIGITAL ARTWORK</small></div></div></div>}
   </main>;
 }
